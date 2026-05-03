@@ -1,0 +1,15 @@
+api:
+  tmdb_key: ""  # Set via env var TMDB_API_KEY or in .env file (preferred)
+
+data:
+  movies_path: "data/movies_metadata.csv"
+  credits_path: "data/credits.csv"
+  keywords_path: "data/keywords.csv"
+
+artifacts:
+  movie_list: "artifacts/movie_list.pkl"
+  similarity: "artifacts/similarity.pkl"
+
+model:
+  max_features: 5000
+  stop_words: "english"
