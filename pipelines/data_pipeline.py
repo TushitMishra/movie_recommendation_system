@@ -3,7 +3,7 @@ import ast
 import sys
 
 from pipelines.logger import logging
-from pipelines.utils import load_config
+from pipelines.utils import load_config, resolve_project_path
 from pipelines.exception import CustomException
 
 
@@ -17,9 +17,9 @@ def load_and_process_data():
         # -----------------------------
         # Load datasets
         # -----------------------------
-        movies = pd.read_csv(config['data']['movies_path'], low_memory=False)
-        credits = pd.read_csv(config['data']['credits_path'])
-        keywords = pd.read_csv(config['data']['keywords_path'])
+        movies = pd.read_csv(resolve_project_path(config['data']['movies_path']), low_memory=False)
+        credits = pd.read_csv(resolve_project_path(config['data']['credits_path']))
+        keywords = pd.read_csv(resolve_project_path(config['data']['keywords_path']))
 
         logging.info("Datasets loaded successfully")
 

@@ -4,13 +4,22 @@ import yaml
 import requests
 
 
+def get_project_root():
+    return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+
+def resolve_project_path(path):
+    if os.path.isabs(path):
+        return path
+    return os.path.join(get_project_root(), path)
+
+
 # -----------------------------------
 # Load Config File
 # -----------------------------------
 def load_config():
     try:
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-        config_path = os.path.join(project_root, "config", "config.yaml")
+        config_path = resolve_project_path("config/config.yaml")
         with open(config_path, "r") as file:
             config = yaml.safe_load(file)
         return config

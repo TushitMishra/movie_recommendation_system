@@ -1,11 +1,12 @@
 import pickle
 import sys
+import os
 
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from pipelines.utils import load_config
+from pipelines.utils import load_config, resolve_project_path
 from pipelines.logger import logging
 from pipelines.exception import CustomException
 
@@ -50,8 +51,13 @@ def train_model(final_movies):
         # -----------------------------
         # Save artifacts
         # -----------------------------
-        pickle.dump(final_movies, open(config['artifacts']['movie_list'], 'wb'))
-        pickle.dump(similarity, open(config['artifacts']['similarity'], 'wb'))
+        movie_path = resolve_project_path(config['artifacts']['movie_list'])
+        similarity_path = resolve_project_path(config['artifacts']['similarity'])
+        os.makedirs(os.path.dirname(movie_path), exist_ok=True)
+        os.makedirs(os.path.dirname(similarity_path), exist_ok=True)
+
+        pickle.dump(final_movies, open(movie_path, 'wb'))
+        pickle.dump(similarity, open(similarity_path, 'wb'))
 
         logging.info("Model saved successfully")
 

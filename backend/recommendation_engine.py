@@ -1,16 +1,22 @@
 import pickle
 import os
 
+from pipelines.data_pipeline import load_and_process_data
+from pipelines.model_pipeline import train_model
+from pipelines.utils import resolve_project_path
+
 
 class RecommendationEngine:
 
     def __init__(self):
 
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-
         # Define artifact paths
-        movie_path = os.path.join(project_root, "artifacts", "movie_list.pkl")
-        similarity_path = os.path.join(project_root, "artifacts", "similarity.pkl")
+        movie_path = resolve_project_path("artifacts/movie_list.pkl")
+        similarity_path = resolve_project_path("artifacts/similarity.pkl")
+
+        if not os.path.exists(movie_path) or not os.path.exists(similarity_path):
+            final_movies = load_and_process_data()
+            train_model(final_movies)
 
         # Load artifacts
         with open(movie_path, "rb") as f:
