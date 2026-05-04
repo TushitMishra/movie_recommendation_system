@@ -6,7 +6,11 @@ from concurrent.futures import ThreadPoolExecutor
 
 import streamlit as st
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+APP_DIR = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.abspath(os.path.join(APP_DIR, ".."))
+for path in (APP_DIR, PROJECT_ROOT):
+    if path not in sys.path:
+        sys.path.insert(0, path)
 
 from backend.recommendation_engine import RecommendationEngine
 from backend.intelligent_recommend import warm_engine_indices

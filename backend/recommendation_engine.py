@@ -6,9 +6,11 @@ class RecommendationEngine:
 
     def __init__(self):
 
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
         # Define artifact paths
-        movie_path = os.path.join("artifacts", "movie_list.pkl")
-        similarity_path = os.path.join("artifacts", "similarity.pkl")
+        movie_path = os.path.join(project_root, "artifacts", "movie_list.pkl")
+        similarity_path = os.path.join(project_root, "artifacts", "similarity.pkl")
 
         # Load artifacts
         with open(movie_path, "rb") as f:
